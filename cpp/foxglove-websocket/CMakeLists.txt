@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.15)
 project(FoxgloveWebSocket CXX)
 
+include(FetchContent)
+FetchContent_Declare(
+    asio
+    GIT_REPOSITORY "https://github.com/chriskohlhoff/asio.git"
+    GIT_TAG "4730c543ba2b8f9396ef1964a25ccc26eb1aea64"
+)
+FetchContent_GetProperties(asio)
+
 find_package(nlohmann_json REQUIRED)
 find_package(websocketpp REQUIRED)
 
@@ -10,6 +18,7 @@ target_include_directories(foxglove_websocket
     SYSTEM
     ${nlohmann_json_INCLUDE_DIRS}
     ${websocketpp_INCLUDE_DIRS}
+    ${asio_SOURCE_DIR}/asio/include/
 )
 target_link_libraries(foxglove_websocket nlohmann_json::nlohmann_json websocketpp::websocketpp)
 set_target_properties(foxglove_websocket PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
@@ -23,4 +32,7 @@ endif()
 install(TARGETS foxglove_websocket)
 INSTALL (DIRECTORY ${CMAKE_SOURCE_DIR}/include/
          DESTINATION include)
+INSTALL (DIRECTORY ${asio_SOURCE_DIR}/asio/include/
+         DESTINATION include)         
+         
 install(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION ${CMAKE_INSTALL_PREFIX}/licenses/)
