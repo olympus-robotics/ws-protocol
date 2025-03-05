@@ -9,8 +9,8 @@ FetchContent_Declare(
 )
 FetchContent_GetProperties(asio)
 
-#find_package(nlohmann_json REQUIRED)
-#find_package(websocketpp REQUIRED)
+find_package(nlohmann_json REQUIRED)
+find_package(websocketpp REQUIRED)
 
 add_library(foxglove_websocket src/base64.cpp src/parameter.cpp src/serialization.cpp src/server_factory.cpp)
 target_include_directories(foxglove_websocket
