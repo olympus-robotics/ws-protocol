@@ -1,5 +1,7 @@
 #pragma once
 
+#define ASIO_STANDALONE
+
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/extensions/permessage_deflate/enabled.hpp>
 #include <websocketpp/server.hpp>

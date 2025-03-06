@@ -1,6 +1,6 @@
 {
   "name": "@foxglove/ws-protocol",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Foxglove WebSocket protocol",
   "keywords": [
     "foxglove",
@@ -39,7 +39,7 @@
     "@types/debug": "^4.1.12",
     "@types/jest": "^29.5.11",
     "@types/lodash": "4.14.202",
-    "@types/node": "^22.9.1",
+    "@types/node": "^22.10.5",
     "commander": "11.1.0",
     "consumer-queue": "1.1.0",
     "eslint": "9.13.0",
@@ -53,6 +53,6 @@
   "dependencies": {
     "debug": "^4",
     "eventemitter3": "^5.0.1",
-    "tslib": "^2.8.0"
+    "tslib": "^2.8.1"
   }
 }

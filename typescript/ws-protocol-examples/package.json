@@ -1,6 +1,6 @@
 {
   "name": "@foxglove/ws-protocol-examples",
-  "version": "0.8.2",
+  "version": "0.9.0",
   "description": "Foxglove WebSocket protocol examples",
   "keywords": [
     "foxglove",
@@ -45,7 +45,7 @@
     "@foxglove/tsconfig": "2.0.0",
     "@types/debug": "^4.1.12",
     "@types/lodash": "^4.14.202",
-    "@types/node": "^22.9.1",
+    "@types/node": "^22.10.5",
     "@types/promise-queue": "^2.2.3",
     "@types/ws": "^8.5.13",
     "eslint": "9.13.0",
@@ -70,7 +70,7 @@
     "promise-queue": "^2.2.5",
     "protobufjs": "^7.2.6",
     "pureimage": "^0.4.13",
-    "tslib": "^2.8.0",
+    "tslib": "^2.8.1",
     "ws": "^8.17.1"
   }
 }

@@ -4,10 +4,20 @@ project(FoxgloveWebSocket VERSION 1.4.0 LANGUAGES CXX)
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
+include(FetchContent)
+FetchContent_Declare(
+  asio
+  GIT_REPOSITORY "https://github.com/chriskohlhoff/asio.git"
+  GIT_TAG "30a170c0e84a798a1752652439bd93f900062eda"
+)
+FetchContent_GetProperties(asio)
+if(NOT asio_POPULATED)
+  FetchContent_Populate(asio)
+endif()
+message(${asio_SOURCE_DIR})
+
 find_package(nlohmann_json REQUIRED)
 find_package(websocketpp REQUIRED)
-
-add_definitions(-DASIO_STANDALONE)
 
 add_library(foxglove_websocket
   src/base64.cpp
@@ -20,6 +30,7 @@ target_include_directories(foxglove_websocket
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+        $<BUILD_INTERFACE:${asio_SOURCE_DIR}/asio/include/>
     PRIVATE
         ${nlohmann_json_INCLUDE_DIRS}
         ${websocketpp_INCLUDE_DIRS}
@@ -33,7 +44,7 @@ target_link_libraries(foxglove_websocket
 
 set_target_properties(foxglove_websocket PROPERTIES CXX_STANDARD 20 CXX_STANDARD_REQUIRED ON)
 
-if (MSVC)
+if(MSVC)
   target_compile_options(foxglove_websocket PRIVATE /W4)
 else()
   target_compile_options(foxglove_websocket PRIVATE -Wall -Wextra -Wpedantic -Wold-style-cast -Wfloat-equal)
@@ -47,6 +58,9 @@ install(TARGETS foxglove_websocket
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+install(DIRECTORY ${asio_SOURCE_DIR}/asio/include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION ${CMAKE_INSTALL_PREFIX}/licenses/)
 
 install(EXPORT foxglove_websocket-targets
         FILE foxglove_websocket-targets.cmake
@@ -71,5 +85,3 @@ install(FILES
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/foxglove_websocket
 )
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/foxglove_websocket/)
