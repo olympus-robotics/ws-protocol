@@ -258,6 +258,9 @@ inline Server<ServerConfiguration>::Server(std::string name, LogCallback logger,
   this->setupTlsHandler();
   _server.set_validate_handler(std::bind(&Server::validateConnection, this, std::placeholders::_1));
   _server.set_open_handler(std::bind(&Server::handleConnectionOpened, this, std::placeholders::_1));
+  _server.set_ping_handler([](auto) {
+    return true;
+  };);
   _server.set_close_handler(
     std::bind(&Server::handleConnectionClosed, this, std::placeholders::_1));
   _server.set_message_handler(
