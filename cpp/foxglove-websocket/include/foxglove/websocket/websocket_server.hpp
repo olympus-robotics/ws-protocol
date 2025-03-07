@@ -8,6 +8,7 @@
 #include <chrono>
 #include <cstdint>
 #include <functional>
+#include <iostream>
 #include <map>
 #include <memory>
 #include <optional>
@@ -258,8 +259,9 @@ inline Server<ServerConfiguration>::Server(std::string name, LogCallback logger,
   this->setupTlsHandler();
   _server.set_validate_handler(std::bind(&Server::validateConnection, this, std::placeholders::_1));
   _server.set_open_handler(std::bind(&Server::handleConnectionOpened, this, std::placeholders::_1));
-  _server.set_ping_handler([this](auto, auto) {
+  _server.set_ping_handler([this](auto, auto paylad) {
     _server.get_elog().write(RECOVERABLE, "PIIING");
+    std::cout << "ping: " << paylad << std::endl;
     return true;
   });
   _server.set_close_handler(
