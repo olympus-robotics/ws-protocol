@@ -1,5 +1,6 @@
+#include "foxglove/websocket/serialization.hpp"
+
 #include <foxglove/websocket/base64.hpp>
-#include <foxglove/websocket/serialization.hpp>
 
 namespace foxglove {
 
