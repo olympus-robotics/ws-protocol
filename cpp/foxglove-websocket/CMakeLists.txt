@@ -51,6 +51,8 @@ set_target_properties(foxglove_websocket PROPERTIES
 target_include_directories(foxglove_websocket
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${websocketpp_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${asio_SOURCE_DIR}/asio/include>
     $<INSTALL_INTERFACE:include>
 )
 target_link_libraries(foxglove_websocket
@@ -59,14 +61,20 @@ target_link_libraries(foxglove_websocket
     nlohmann_json::nlohmann_json
 )
 
-# Export and install only the foxglove_websocket interface
 install(TARGETS foxglove_websocket
   EXPORT foxglove_websocket-targets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+install(DIRECTORY ${websocketpp_SOURCE_DIR}/websocketpp
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+install(DIRECTORY ${asio_SOURCE_DIR}/asio/include/
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
@@ -87,6 +95,7 @@ write_basic_package_version_file(
   VERSION ${PROJECT_VERSION}
   COMPATIBILITY SameMajorVersion
 )
+
 install(
   FILES
     "${CMAKE_CURRENT_BINARY_DIR}/foxglove_websocket-config.cmake"
