@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef ASIO_STANDALONE
+#define ASIO_STANDALONE
+#endif
+
 #include <nlohmann/json.hpp>
 #include <websocketpp/config/asio.hpp>
 #include <websocketpp/server.hpp>
