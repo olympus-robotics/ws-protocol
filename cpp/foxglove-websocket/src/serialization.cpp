@@ -187,6 +187,8 @@ void ServiceResponse::read(const uint8_t* payload, size_t payloadSize) {
   offset += 4;
   this->callId = ReadUint32LE(payload + offset);
   offset += 4;
+  this->timeoutMs = ReadUint32LE(payload + offset);
+  offset += 4;
   const size_t encondingLength = static_cast<size_t>(ReadUint32LE(payload + offset));
   offset += 4;
   this->encoding = std::string(reinterpret_cast<const char*>(payload + offset), encondingLength);
@@ -201,6 +203,8 @@ void ServiceResponse::write(uint8_t* payload) const {
   foxglove::WriteUint32LE(payload + offset, this->serviceId);
   offset += 4;
   foxglove::WriteUint32LE(payload + offset, this->callId);
+  offset += 4;
+  foxglove::WriteUint32LE(payload + offset, this->timeoutMs);
   offset += 4;
   foxglove::WriteUint32LE(payload + offset, static_cast<uint32_t>(this->encoding.size()));
   offset += 4;
