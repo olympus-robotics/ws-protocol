@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <cstdint>
 #include <cstring>
 #include <optional>
 #include <stdint.h>
@@ -143,18 +144,19 @@ struct Service : ServiceWithoutId {
 struct ServiceResponse {
   ServiceId serviceId;
   uint32_t callId;
+  uint32_t timeoutMs = 0;  // 0 = client does not set a specific timeout
   std::string encoding;
   std::vector<uint8_t> data;
 
   size_t size() const {
-    return 4 + 4 + 4 + encoding.size() + data.size();
+    return 4 + 4 + 4 + 4 + encoding.size() + data.size();
   }
   void read(const uint8_t* payload, size_t payloadSize);
   void write(uint8_t* payload) const;
 
   bool operator==(const ServiceResponse& other) const {
     return serviceId == other.serviceId && callId == other.callId && encoding == other.encoding &&
-           data == other.data;
+           data == other.data && other.timeoutMs == timeoutMs;
   }
 };
 

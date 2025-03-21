@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef ASIO_STANDALONE
+#define ASIO_STANDALONE
+#endif
+
 #include <websocketpp/common/asio.hpp>
 #include <websocketpp/logger/levels.hpp>
 

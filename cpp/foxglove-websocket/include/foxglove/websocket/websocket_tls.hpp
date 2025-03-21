@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef ASIO_STANDALONE
+#define ASIO_STANDALONE
+#endif
+
 #include <websocketpp/config/asio.hpp>
 #include <websocketpp/extensions/permessage_deflate/enabled.hpp>
 
